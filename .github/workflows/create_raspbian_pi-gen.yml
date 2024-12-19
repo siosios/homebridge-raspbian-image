@@ -198,7 +198,7 @@ jobs:
           echo "::notice::IMAGE_SHA256_CHECKSUM ${IMGFILENAME} ==> ${IMAGE_SHA256_CHECKSUM}"
 
       - name: Upload Image to release v${{ needs.tag.outputs.version }} 
-        uses: AButler/upload-release-assets@v2.0.2
+        uses: AButler/upload-release-assets@v3.0
         with:
           files: '${{ steps.build.outputs.image-path }}'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -220,7 +220,7 @@ jobs:
           mv pi-gen/deploy/rpi-image-repo.json ./rpi-image-repo-${{ matrix.name }}.json
 
       - name: Upload Info to release ${{ needs.tag.outputs.version }} 
-        uses: AButler/upload-release-assets@v2.0.2
+        uses: AButler/upload-release-assets@v3.0
         with:
           files: './*.json'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -231,11 +231,13 @@ jobs:
     needs: [tag, build_images]
     runs-on: [ubuntu-latest]
     steps:
-      #- uses: actions/create-github-app-token@v1
-      #  id: app-token
-      #  with:
-      #    app-id: ${{ vars.APP_ID }}
-      #    private-key: ${{ secrets.PRIVATE_KEY }}
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          repositories: 'homebridge.io'
+          owner: 'homebridge'
       
       - uses: actions/checkout@v4
       #  with:
@@ -267,7 +269,7 @@ jobs:
       - name: Push ${{ needs.tag.outputs.version }} Image to Homebridge Registry
         uses: dmnemec/copy_file_to_another_repo_action@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+          API_TOKEN_GITHUB: ${{ steps.app-token.outputs.token }}
         with:
           source_file: 'rpi-image-repo.json'
           destination_repo: 'homebridge/homebridge.io'
