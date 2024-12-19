@@ -13,6 +13,7 @@ jobs:
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
+          repositories: 'homebridge/homebridge.io'
       
       - uses: actions/checkout@v4
       #  with:
