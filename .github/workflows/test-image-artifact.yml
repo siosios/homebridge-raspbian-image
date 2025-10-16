@@ -33,12 +33,25 @@ jobs:
           echo "Downloaded files:"
           ls -lh
 
+      - name: Extract image from zip
+        run: |
+          ZIP_FILE=$(ls *.zip 2>/dev/null | head -n1)
+          if [ -z "$ZIP_FILE" ]; then
+            echo "Error: No .zip file found in artifact"
+            exit 1
+          fi
+          echo "Found zip file: $ZIP_FILE"
+          unzip "$ZIP_FILE"
+          echo ""
+          echo "Extracted files:"
+          ls -lh
+
       - name: Identify image file
         id: find_image
         run: |
           IMAGE_FILE=$(ls *.img 2>/dev/null | head -n1)
           if [ -z "$IMAGE_FILE" ]; then
-            echo "Error: No .img file found in artifact"
+            echo "Error: No .img file found after extraction"
             exit 1
           fi
           echo "Found image: $IMAGE_FILE"
