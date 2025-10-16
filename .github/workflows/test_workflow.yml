@@ -1,4 +1,5 @@
 name: Test Workflow
+run-name: Test pi-gen with release ${{ inputs.release }} and ${{ inputs.pi-gen-version }} pi-gen branch
 
 on:
   workflow_dispatch:
@@ -16,7 +17,6 @@ on:
 
 jobs:
   pi-gen-verbose:
-
     runs-on: ubuntu-latest
     steps:
       - uses: usimd/pi-gen-action@v1
