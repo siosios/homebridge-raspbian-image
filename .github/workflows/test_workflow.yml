@@ -27,7 +27,7 @@ jobs:
           pi-gen-version: ${{ inputs.pi-gen-version }}
           release: ${{ inputs.release }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: pi-gen-image
           path: ${{ steps.build.outputs.image-path }}
