@@ -16,7 +16,7 @@ updates:
     groups:
       actions:
         patterns:
-          - "actions/*"
+          - "*"
     # Automatically rebase PRs when conflicts occur
     rebase-strategy: "auto"
     # Commit message prefix
