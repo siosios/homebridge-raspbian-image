@@ -19,6 +19,10 @@ jobs:
   pi-gen-verbose:
     runs-on: ubuntu-latest
     steps:
+      - name: Install Git
+        run: |
+          apt-get install git
+        
       - uses: usimd/pi-gen-action@v1
         id: build
         with:
@@ -26,6 +30,7 @@ jobs:
           verbose-output: true
           pi-gen-version: ${{ inputs.pi-gen-version }}
           release: ${{ inputs.release }}
+          docker-opts: '--debug'
 
       - uses: actions/upload-artifact@v4
         with:
