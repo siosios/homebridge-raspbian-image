@@ -1,13 +1,16 @@
-#! /bin/sh
+#! /bin/bash
 
-echo
-echo "Cleaning up previous pi-gen clone"
-echo
+set -e
 
-rm -rf pi-gen Dockerfile build.sh build-docker.sh docker-compose.yml export-image export-noobs imagetool.sh scripts stage0 stage1 stage2 stage3 stage4 stage5
-echo
-echo "Cloning recent pi-gen arm64 branch for local testing of build process"
-echo
+
+docker system prune -a
+docker volume prune
+
+rm -rf pi-gen
+
+
+# export ARCH=aarch64 # For arm64 (64-bit)
+# export ARCH=arm32v7 # For armhf (32-bit)#
 
 git clone https://github.com/RPi-Distro/pi-gen
 cd pi-gen
@@ -15,11 +18,24 @@ git switch arm64
 cd ..
 
 echo
-echo "Moving clone for use"
+echo "Copying setup for use"
 echo
 
-for i in Dockerfile build.sh build-docker.sh docker-compose.yml export-image export-noobs imagetool.sh scripts stage0 stage1 stage2 stage3 stage4 stage5
-do 
-  echo "Moving "$i
-  mv pi-gen/$i .
-done
+cp -r config stable ./pi-gen
+cp -r stage* ./pi-gen
+
+export BUILD_VERSION="$(date +%Y%m%d)-HB Test"
+export HOMEBRIDGE_APT_PKG_VERSION=$(jq -r '.dependencies["@homebridge/homebridge-apt-pkg"]' ./stable/package.json | sed 's/\^//')
+export FFMPEG_FOR_HOMEBRIDGE_VERSION=v$(jq -r '.dependencies["ffmpeg-for-homebridge"]' ./stable/package.json | sed 's/\^//')
+export RELEASE_STREAM="stable"
+
+echo -e "\nexport BUILD_VERSION=\"$BUILD_VERSION\"" | tee -a ./pi-gen/config
+echo "export HOMEBRIDGE_APT_PKG_VERSION=\"$HOMEBRIDGE_APT_PKG_VERSION\"" | tee -a ./pi-gen/config
+echo "export FFMPEG_FOR_HOMEBRIDGE_VERSION=\"$FFMPEG_FOR_HOMEBRIDGE_VERSION\"" | tee -a ./pi-gen/config
+echo "export RELEASE_STREAM=\"$RELEASE_STREAM\"" | tee -a ./pi-gen/config
+
+echo
+echo 'To build the image, run:'
+echo
+echo '  docker rm -v pigen_work ; ./pi-gen/build-docker.sh'
+echo
