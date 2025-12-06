@@ -14,11 +14,11 @@ on:
         options:
           - stable
         default: stable
-      skip-build:
-        description: 'Skip build and only update dependencies'
-        required: false
-        type: boolean
-        default: false
+     # skip-build:
+     #   description: 'Skip build and only update dependencies'
+     #   required: false
+     #   type: boolean
+     #   default: false
 
 concurrency:
   group: release-stage-1-update-dependencies

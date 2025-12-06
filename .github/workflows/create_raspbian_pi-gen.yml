@@ -1,5 +1,5 @@
 name: Release Stage 2 - Create Raspbian Homebridge Image using pi-gen
-run-name: Release Stage 2 - Create Raspbian Homebridge Image ${{ github.ref }}
+run-name: Release Stage 2 - Create Raspbian Homebridge Image ${{ github.ref }} - ${{ inputs.run_name }}
 
 on:
   workflow_dispatch:
@@ -33,6 +33,11 @@ on:
           - Scheduled
           - Manual
         default: Manual
+      run_name:
+        description: 'Unique name of the run'
+        required: false
+        type: string
+        default: ''
 
 concurrency:
   group: release-stage-2-build-raspbian-image
