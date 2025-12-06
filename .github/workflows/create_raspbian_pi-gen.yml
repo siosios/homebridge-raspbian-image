@@ -25,6 +25,14 @@ on:
           - stable
         default: 'stable'
         required: false
+      Scheduled:
+        description: 'Whether this is a scheduled run'
+        required: false
+        type: choice
+        options:
+          - Scheduled
+          - Manual
+        default: Manual
 
 concurrency:
   group: release-stage-2-build-raspbian-image

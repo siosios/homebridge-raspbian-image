@@ -1,5 +1,5 @@
 name: Release Stage 1 - Dependency Management - Update and Build
-run-name: Release Stage 1 - Dependency Management - ${{ github.event_name == 'workflow_dispatch' && format('Manual - {0}', github.event.inputs.release_stream) || 'Scheduled' }} Run
+run-name: Release Stage 1 - Dependency Management - ${{ github.event_name == 'workflow_dispatch' && format('Manual - {0}', github.event.inputs.release-stream) || 'Scheduled' }} Run
 
 on:
   schedule:
@@ -7,14 +7,14 @@ on:
     - cron: '0 10 * * *'
   workflow_dispatch:
     inputs:
-      release_stream:
+      release-stream:
         description: 'Choose release stream to update and build'
         required: true
         type: choice
         options:
           - stable
         default: stable
-      skip_build:
+      skip-build:
         description: 'Skip build and only update dependencies'
         required: false
         type: boolean
@@ -41,10 +41,10 @@ jobs:
         id: set-matrix
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            if [[ "${{ github.event.inputs.release_stream }}" == "all" ]]; then
+            if [[ "${{ github.event.inputs.release-stream }}" == "all" ]]; then
               echo 'matrix={"stream":["stable"]}' >> $GITHUB_OUTPUT
             else
-              echo "matrix={\"stream\":[\"${{ github.event.inputs.release_stream }}\"]}" >> $GITHUB_OUTPUT
+              echo "matrix={\"stream\":[\"${{ github.event.inputs.release-stream }}\"]}" >> $GITHUB_OUTPUT
             fi
           else
             # Scheduled run - process stable, beta, and alpha streams
@@ -70,7 +70,7 @@ jobs:
         uses: homebridge/dependency-bot@latest
         with:
           config_file: '.github/homebridge-dependency-bot-${{ matrix.stream }}.json'
-          release_stream: ${{ matrix.stream }}
+          release-stream: ${{ matrix.stream }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Log Skipped ${{ matrix.stream }} Stage 2 Trigger
@@ -91,6 +91,6 @@ jobs:
           github-token: ${{ secrets.GH_TOKEN }}
           timeout-minutes: '120'
           workflow-fields: |
-            release_stream=${{ matrix.stream }}
+            release-stream=${{ matrix.stream }}
             Scheduled=${{ github.event_name == 'workflow_dispatch' && 'Manual' || 'Scheduled' }}
           run-name: "${{ matrix.stream }}:${{ github.run_id }}"
