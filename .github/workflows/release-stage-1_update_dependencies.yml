@@ -70,7 +70,7 @@ jobs:
         uses: homebridge/dependency-bot@latest
         with:
           config_file: '.github/homebridge-dependency-bot-${{ matrix.stream }}.json'
-          release-stream: ${{ matrix.stream }}
+          release_stream: ${{ matrix.stream }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Log Skipped ${{ matrix.stream }} Stage 2 Trigger
