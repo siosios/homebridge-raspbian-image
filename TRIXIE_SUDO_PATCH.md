@@ -4,7 +4,9 @@ If you have already installed a Homebridge Raspberry Pi image and upgraded to De
 
 ## Quick Fix (One-liner)
 
-Run the following command to patch your existing installation:
+**You can not apply this fix using the Homebridge UI web terminal! Login using SSH instead.**
+<BR>
+Run the following command from ssh to patch your existing installation:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/homebridge/homebridge-raspbian-image/latest/stage3_homebridge/01-homebridge/files/010_homebridge-nopasswd | sudo tee /etc/sudoers.d/010_homebridge-nopasswd > /dev/null && sudo chmod 0440 /etc/sudoers.d/010_homebridge-nopasswd && sudo visudo -c
