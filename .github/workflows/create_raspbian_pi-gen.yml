@@ -134,6 +134,8 @@ jobs:
     steps:
 
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
 # https://stackoverflow.com/questions/72444103/what-does-running-the-multiarch-qemu-user-static-does-before-building-a-containe
 
