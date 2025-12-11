@@ -534,7 +534,7 @@ do_extra_packages() {
       A0\ *) do_install_adguard_home ;;
       A1\ *) do_install_pihole ;;
       A2\ *) do_install_deconz ;;
-      #A3\ *) do_install_desktop_and_vnc ;;
+      # A3\ *) do_install_desktop_and_vnc ;;
       *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
     esac || whiptail --msgbox "There was an error running option $FUN" 20 60 1
   fi
