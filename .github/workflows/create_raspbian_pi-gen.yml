@@ -15,7 +15,7 @@ on:
           - major
         default: 'patch'
       publish:
-        description: 'Publish Release to Homebridge Registry'
+        description: 'Publish Release to RPI Imager Registry'
         type: boolean
         default: false
       release-stream:
