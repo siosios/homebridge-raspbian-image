@@ -524,8 +524,8 @@ do_extra_packages() {
     "A0 AdGuard Home" "Install / Uninstall AdGuard Home" \
     "A1 Pi-hole" "Install / Reconfigure Pi-hole" \
     "A2 deCONZ / Phoscon" "Install / Update to manage your ConBee or RaspBee device" \
-    "A3 RealVNC Server" "Enable / Disable desktop access over VNC" \
     3>&1 1>&2 2>&3)
+    # "A3 RealVNC Server" "Enable / Disable desktop access over VNC" \
   RET=$?
   if [ $RET -eq 1 ]; then
     return 0
@@ -534,7 +534,7 @@ do_extra_packages() {
       A0\ *) do_install_adguard_home ;;
       A1\ *) do_install_pihole ;;
       A2\ *) do_install_deconz ;;
-      A3\ *) do_install_desktop_and_vnc ;;
+      #A3\ *) do_install_desktop_and_vnc ;;
       *) whiptail --msgbox "Programmer error: unrecognized option" 20 60 1 ;;
     esac || whiptail --msgbox "There was an error running option $FUN" 20 60 1
   fi
