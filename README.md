@@ -19,7 +19,7 @@ This project provides a free [Raspbian](https://www.raspberrypi.org/downloads/ra
 * Runs on RPI 2 or higher models supporting ARMv7 cpu's or greater ( Last version supporting RPI 1 and RPi Zero W was [v1.2.4](https://github.com/homebridge/homebridge-raspbian-image/releases/tag/v1.2.4))
 * Built on Raspbian Lite (no desktop)
 * Simple WiFi Setup
-* Includes `ffmpeg` pre-compiled with audio support (libfdk-aac)
+* Includes [ffmpeg](https://github.com/homebridge/ffmpeg-for-homebridge) pre-compiled with audio support (libfdk-aac)
 * Includes a user friendly, easy to use web based GUI to configure Homebridge and monitor your Raspberry Pi
 * Visual configuration for over 400 plugins (no manual config.json editing required)
 
