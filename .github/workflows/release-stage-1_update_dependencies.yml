@@ -19,6 +19,10 @@ on:
      #   required: false
      #   type: boolean
      #   default: false
+      publish:
+        description: 'Publish Release to RPI Imager Registry'
+        type: boolean
+        default: true
 
 concurrency:
   group: release-stage-1-update-dependencies
@@ -93,4 +97,5 @@ jobs:
           workflow-fields: |
             release-stream=${{ matrix.stream }}
             Scheduled=${{ github.event_name == 'workflow_dispatch' && 'Manual' || 'Scheduled' }}
+            publish=${{ github.event.inputs.publish }}
           run-name: "${{ matrix.stream }}:${{ github.run_id }}"
